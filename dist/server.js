@@ -41,30 +41,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var mythical_weapon_1 = require("./models/mythical_weapon");
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1["default"].config();
+console.log(process.env);
 var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
-var mythicalWeapon = new mythical_weapon_1.MythicalWeaponStore();
 app.get("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var weapon, mythicalWeapon, result;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    weapon = {
-                        id: 2,
-                        name: 'Sword',
-                        type: 'Doubled Edged',
-                        weight: 50
-                    };
-                    mythicalWeapon = new mythical_weapon_1.MythicalWeaponStore();
-                    return [4 /*yield*/, mythicalWeapon.create(weapon)];
-                case 1:
-                    result = _a.sent();
-                    res.send(result);
-                    return [2 /*return*/];
-            }
+            res.status(200).send('Hello World');
+            return [2 /*return*/];
         });
     });
 });

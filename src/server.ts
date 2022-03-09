@@ -1,5 +1,9 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
+import dotenv from 'dotenv'
+dotenv.config()
+
+console.log(process.env)
 
 const app: express.Application = express();
 const address: string = "0.0.0.0:3000";
