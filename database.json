@@ -2,15 +2,15 @@
   "dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "fantasy_worlds",
-    "user": "magical_user",
+    "database": "book_stores",
+    "user": "blossom",
     "password": "password123"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "fantasy_worlds_test",
-    "user": "magical_user",
+    "database": "book_stores_test",
+    "user": "blossom",
     "password": "password123"
   }
 }
