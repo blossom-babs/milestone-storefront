@@ -39,28 +39,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var books_1 = require("./models/books");
-var app = (0, express_1["default"])();
-var address = "0.0.0.0:3000";
-app.use(body_parser_1["default"].json());
-app.get("/", function (req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var getAllBooks, result;
-        return __generator(this, function (_a) {
-            try {
-                getAllBooks = new books_1.BooksTable();
-                result = getAllBooks.index();
-                res.status(200).json(result);
-            }
-            catch (error) {
-                throw new Error("could not fetch book ".concat(error));
-            }
-            return [2 /*return*/];
+exports.BooksTable = void 0;
+var database_1 = __importDefault(require("../database"));
+var BooksTable = /** @class */ (function () {
+    function BooksTable() {
+    }
+    BooksTable.prototype.index = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sqlRequest, response, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sqlRequest = 'SELECT * FROM books';
+                        return [4 /*yield*/, conn.query(sqlRequest)];
+                    case 2:
+                        response = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, response.rows];
+                    case 3:
+                        error_1 = _a.sent();
+                        throw new Error("Cannot get error ".concat(error_1));
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
-    });
-});
-app.listen(3000, function () {
-    console.log("starting app on: ".concat(address));
-});
+    };
+    return BooksTable;
+}());
+exports.BooksTable = BooksTable;
