@@ -41,26 +41,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var books_1 = require("./models/books");
+var database_1 = __importDefault(require("./database"));
 var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
 app.get("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var getAllBooks, result;
         return __generator(this, function (_a) {
-            try {
-                getAllBooks = new books_1.BooksTable();
-                result = getAllBooks.index();
-                res.status(200).json(result);
-            }
-            catch (error) {
-                throw new Error("could not fetch book ".concat(error));
-            }
+            console.log('client connection from server', database_1["default"]);
             return [2 /*return*/];
         });
     });
 });
+app.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/];
+    });
+}); });
 app.listen(3000, function () {
     console.log("starting app on: ".concat(address));
 });

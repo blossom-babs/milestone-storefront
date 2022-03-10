@@ -46,7 +46,31 @@ var BooksTable = /** @class */ (function () {
     }
     BooksTable.prototype.index = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sqlRequest, response, error_1;
+            var sql, conn, result, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'SELECT * FROM books';
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        error_1 = _a.sent();
+                        throw new Error("Cannot get error ".concat(error_1));
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    BooksTable.prototype.create = function (book) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -54,15 +78,15 @@ var BooksTable = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sqlRequest = 'SELECT * FROM books';
-                        return [4 /*yield*/, conn.query(sqlRequest)];
+                        sql = 'INSERT INTO books (title, author, total_pages, category, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+                        return [4 /*yield*/, conn.query(sql, [book.title, book.author, book.total_pages, book.category, book.summary])];
                     case 2:
-                        response = _a.sent();
+                        result = _a.sent();
                         conn.release();
-                        return [2 /*return*/, response.rows];
+                        return [2 /*return*/, result.rows[0]];
                     case 3:
-                        error_1 = _a.sent();
-                        throw new Error("Cannot get error ".concat(error_1));
+                        error_2 = _a.sent();
+                        throw new Error("Cannot get error ".concat(error_2));
                     case 4: return [2 /*return*/];
                 }
             });

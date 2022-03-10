@@ -6,3 +6,4 @@ total_pages INTEGER,
 category VARCHAR(100),
 summary VARCHAR(500)
 )
+

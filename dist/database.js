@@ -13,4 +13,5 @@ var Client = new pg_1.Pool({
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD
 });
+console.log('client connection from db', Client);
 exports["default"] = Client;

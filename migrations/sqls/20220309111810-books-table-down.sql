@@ -1,1 +1,1 @@
-DROP TABLE book_stores
+DROP TABLE books
