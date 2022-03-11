@@ -1,5 +1,5 @@
-import { Request, Response, Application } from "express";
-import { BookStore, Book } from "../models/books";
+import { Request, Response, Application } from 'express';
+import { BookStore, Book } from '../models/books';
 
 const bookStore = new BookStore();
 
@@ -64,11 +64,11 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const BookRoutes = (app: Application) => {
-  app.post("/books", create);
-  app.get("/books", index);
-  app.get("/books/:id", show);
-  app.put("/books/:id", update);
-  app.delete("/books/:id", destroy);
+  app.post('/books', create);
+  app.get('/books', index);
+  app.get('/books/:id', show);
+  app.put('/books/:id', update);
+  app.delete('/books/:id', destroy);
 };
 
 export default BookRoutes;

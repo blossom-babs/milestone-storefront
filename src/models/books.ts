@@ -1,4 +1,4 @@
-import client from "../database";
+import client from '../database';
 
 export type Book = {
   title: string;
@@ -11,7 +11,7 @@ export type Book = {
 export class BookStore {
   async index() {
     try {
-      const sql = "SELECT * FROM books";
+      const sql = 'SELECT * FROM books';
       const conn = await client.connect();
       const result = await conn.query(sql);
       conn.release();
@@ -26,7 +26,7 @@ export class BookStore {
     try {
       const conn = await client.connect();
       const sql =
-        "INSERT INTO books (title, author, total_pages, category, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+        'INSERT INTO books (title, author, total_pages, category, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const bookValues = Object.values(book);
       const result = await conn.query(sql, bookValues);
       conn.release();

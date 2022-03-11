@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node src/server.ts",
-    "prettier": "npx prettier --write .",
+    "prettier": "npx prettier --write **/*.ts",
     "lint": "eslint **/*.ts --fix",
     "format": "npm run lint -- --fix && npm run prettier",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",

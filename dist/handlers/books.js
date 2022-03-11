@@ -148,10 +148,10 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 var BookRoutes = function (app) {
-    app.post("/books", create);
-    app.get("/books", index);
-    app.get("/books/:id", show);
-    app.put("/books/:id", update);
-    app["delete"]("/books/:id", destroy);
+    app.post('/books', create);
+    app.get('/books', index);
+    app.get('/books/:id', show);
+    app.put('/books/:id', update);
+    app["delete"]('/books/:id', destroy);
 };
 exports["default"] = BookRoutes;
