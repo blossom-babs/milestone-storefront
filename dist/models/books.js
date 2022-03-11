@@ -39,12 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.BooksTable = void 0;
+exports.BookStore = void 0;
 var database_1 = __importDefault(require("../database"));
-var BooksTable = /** @class */ (function () {
-    function BooksTable() {
+var BookStore = /** @class */ (function () {
+    function BookStore() {
     }
-    BooksTable.prototype.index = function () {
+    BookStore.prototype.index = function () {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, error_1;
             return __generator(this, function (_a) {
@@ -62,15 +62,16 @@ var BooksTable = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         error_1 = _a.sent();
-                        throw new Error("Cannot get error ".concat(error_1));
+                        throw new Error("Could not get all books: ".concat(error_1));
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    BooksTable.prototype.create = function (book) {
+    // add book to db
+    BookStore.prototype.create = function (book) {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, result, error_2;
+            var conn, sql, bookValues, result, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -78,20 +79,96 @@ var BooksTable = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'INSERT INTO books (title, author, total_pages, category, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-                        return [4 /*yield*/, conn.query(sql, [book.title, book.author, book.total_pages, book.category, book.summary])];
+                        sql = "INSERT INTO books (title, author, total_pages, category, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+                        bookValues = Object.values(book);
+                        return [4 /*yield*/, conn.query(sql, bookValues)];
                     case 2:
                         result = _a.sent();
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         error_2 = _a.sent();
-                        throw new Error("Cannot get error ".concat(error_2));
+                        throw new Error("Could not save book: ".concat(error_2));
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return BooksTable;
+    // get one book
+    BookStore.prototype.show = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = "SELECT * FROM books WHERE id=".concat(id);
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        error_3 = _a.sent();
+                        throw new Error("Could not get book with id ".concat(id, ": ").concat(error_3));
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // delete a book
+    BookStore.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = "DELETE FROM books WHERE id=".concat(id, " RETURNING *");
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        error_4 = _a.sent();
+                        throw new Error("Could not delete book with id ".concat(id, ": ").concat(error_4));
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // update a book
+    BookStore.prototype.update = function (id, book) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, bookValues, result, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = "UPDATE books SET title=($1), author=($2), total_pages=($3), category=($4), summary=($5) WHERE id=".concat(id, " RETURNING *");
+                        bookValues = Object.values(book);
+                        return [4 /*yield*/, conn.query(sql, bookValues)];
+                    case 2:
+                        result = _a.sent();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        error_5 = _a.sent();
+                        throw new Error("Could not get book with title ".concat(book.title, ": ").concat(error_5));
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return BookStore;
 }());
-exports.BooksTable = BooksTable;
+exports.BookStore = BookStore;

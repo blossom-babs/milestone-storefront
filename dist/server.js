@@ -39,23 +39,127 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
+var books_1 = require("./models/books");
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var database_1 = __importDefault(require("./database"));
 var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
 app.get("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
+        var allBooks, result, error_1;
         return __generator(this, function (_a) {
-            console.log('client connection from server', database_1["default"]);
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    allBooks = new books_1.BookStore();
+                    return [4 /*yield*/, allBooks.index()];
+                case 1:
+                    result = _a.sent();
+                    res.status(200).json(result);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    throw new Error("Could not retrieve books: ".concat(error_1));
+                case 3: return [2 /*return*/];
+            }
         });
     });
 });
-app.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, book, result, error_2;
     return __generator(this, function (_a) {
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                book = new books_1.BookStore();
+                return [4 /*yield*/, book.show(id)];
+            case 1:
+                result = _a.sent();
+                if (result === undefined) {
+                    res.status(200).json({ Message: "Book with id ".concat(id, " cannot be found.") });
+                    return [2 /*return*/];
+                }
+                else {
+                    res.status(200).json(result);
+                    return [2 /*return*/];
+                }
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                throw new Error("Could not retrieve book: ".concat(error_2));
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+app["delete"]('/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, removeBook, result, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                removeBook = new books_1.BookStore();
+                return [4 /*yield*/, removeBook["delete"](id)
+                    // what if id is valid but not available in the db
+                ];
+            case 1:
+                result = _a.sent();
+                // what if id is valid but not available in the db
+                res.status(200).json(result);
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                throw new Error("Could not retrieve book: ".concat(error_3));
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var book, addBook, result, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                book = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                addBook = new books_1.BookStore();
+                return [4 /*yield*/, addBook.create(book)];
+            case 2:
+                result = _a.sent();
+                res.status(200).json(result);
+                return [3 /*break*/, 4];
+            case 3:
+                error_4 = _a.sent();
+                res.send(404).json({ Message: "Unable to save book ".concat(book.title) });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.put('/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var book, id, editBook, result, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                book = req.body;
+                console.log(book);
+                id = req.params.id;
+                editBook = new books_1.BookStore();
+                return [4 /*yield*/, editBook.update(id, book)];
+            case 1:
+                result = _a.sent();
+                res.status(400).json(result);
+                return [3 /*break*/, 3];
+            case 2:
+                error_5 = _a.sent();
+                res.status(400).json({ message: "".concat(error_5) });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
     });
 }); });
 app.listen(3000, function () {
