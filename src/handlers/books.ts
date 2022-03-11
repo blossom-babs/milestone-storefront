@@ -1,7 +1,7 @@
 import { Request, Response, Application } from "express";
 import { BookStore, Book } from "../models/books";
 
-const bookStore = new BookStore()
+const bookStore = new BookStore();
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -18,9 +18,11 @@ const index = async (req: Request, res: Response) => {
     const result = await bookStore.index();
     res.status(200).json(result);
   } catch (error) {
-    res.status(200).json({ message: `Could not fetch books with error ${error}` });
+    res
+      .status(200)
+      .json({ message: `Could not fetch books with error ${error}` });
   }
-}
+};
 
 const show = async (req: Request, res: Response) => {
   try {
@@ -32,9 +34,11 @@ const show = async (req: Request, res: Response) => {
     }
     res.status(200).json(result);
   } catch (error) {
-    res.status(200).json({ message: `Could not fetch book with id ${req.params.id}` });
+    res
+      .status(200)
+      .json({ message: `Could not fetch book with id ${req.params.id}` });
   }
-}
+};
 
 const update = async (req: Request, res: Response) => {
   try {
@@ -43,11 +47,13 @@ const update = async (req: Request, res: Response) => {
     const result = await bookStore.update(id, book);
     res.status(400).json(result);
   } catch (error) {
-    res.status(200).json({ message: `Could not update book: ${req.body.title}` });
+    res
+      .status(200)
+      .json({ message: `Could not update book: ${req.body.title}` });
   }
 };
 
-const destroy =  async (req: Request, res: Response) => {
+const destroy = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await bookStore.delete(id);
@@ -55,15 +61,14 @@ const destroy =  async (req: Request, res: Response) => {
   } catch (error) {
     throw new Error(`Could not retrieve book: ${error}`);
   }
-}
-
+};
 
 const BookRoutes = (app: Application) => {
-  app.post("/books", create)
-  app.get("/books", index)
-  app.get("/books/:id", show)
-  app.put("/books/:id", update)
-  app.delete("/books/:id", destroy)
-}
+  app.post("/books", create);
+  app.get("/books", index);
+  app.get("/books/:id", show);
+  app.put("/books/:id", update);
+  app.delete("/books/:id", destroy);
+};
 
-export default BookRoutes
+export default BookRoutes;

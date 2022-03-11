@@ -10,8 +10,10 @@ var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
 (0, books_1["default"])(app);
-app.get('*', function (req, res) {
-    res.status(200).json({ Message: 'You tried to access a route that does not exist' });
+app.get("*", function (req, res) {
+    res
+        .status(200)
+        .json({ Message: "You tried to access a route that does not exist" });
 });
 app.listen(3000, function () {
     console.log("starting app on: ".concat(address));

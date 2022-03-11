@@ -7,10 +7,12 @@ const address: string = "0.0.0.0:3000";
 
 app.use(bodyParser.json());
 
-BookRoutes(app)
+BookRoutes(app);
 
-app.get('*', (req: Request, res: Response) => {
-  res.status(200).json({ Message: 'You tried to access a route that does not exist' });
+app.get("*", (req: Request, res: Response) => {
+  res
+    .status(200)
+    .json({ Message: "You tried to access a route that does not exist" });
 });
 
 app.listen(3000, () => {

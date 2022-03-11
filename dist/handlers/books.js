@@ -71,7 +71,9 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 return [3 /*break*/, 3];
             case 2:
                 error_2 = _a.sent();
-                res.status(200).json({ message: "Could not fetch books with error ".concat(error_2) });
+                res
+                    .status(200)
+                    .json({ message: "Could not fetch books with error ".concat(error_2) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -95,7 +97,9 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
-                res.status(200).json({ message: "Could not fetch book with id ".concat(req.params.id) });
+                res
+                    .status(200)
+                    .json({ message: "Could not fetch book with id ".concat(req.params.id) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -116,7 +120,9 @@ var update = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [3 /*break*/, 3];
             case 2:
                 error_4 = _a.sent();
-                res.status(200).json({ message: "Could not update book: ".concat(req.body.title) });
+                res
+                    .status(200)
+                    .json({ message: "Could not update book: ".concat(req.body.title) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
