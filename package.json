@@ -7,9 +7,9 @@
     "start": "node src/server.ts",
     "prettier": "npx prettier --write **/*.ts",
     "lint": "eslint **/*.ts --fix",
-    "format": "npm run lint -- --fix && npm run prettier",
+    "format": "npm run lint && npm run prettier",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "NODE_ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
+    "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
     "tsc": "tsc"
   },
   "author": "Stutern",

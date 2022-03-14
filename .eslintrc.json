@@ -9,9 +9,10 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import"],
   "rules": {
     "class-methods-use-this": "off",
+    "import/no-mutable-exports": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
