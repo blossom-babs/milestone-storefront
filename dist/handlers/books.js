@@ -45,7 +45,6 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 book = req.body;
-                console.log(book);
                 return [4 /*yield*/, bookStore.create(book)];
             case 1:
                 result = _a.sent();
@@ -69,7 +68,9 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 1:
                 result = _a.sent();
                 if (result.length < 1) {
-                    res.status(200).json({ Message: 'You have no book saved in the library' });
+                    res
+                        .status(200)
+                        .json({ Message: 'You have no book saved in the library' });
                 }
                 res.status(200).json(result);
                 return [3 /*break*/, 3];

@@ -6,7 +6,6 @@ const bookStore = new BookStore();
 const create = async (req: Request, res: Response) => {
   try {
     const book: Book = req.body;
-    console.log(book)
     const result = await bookStore.create(book);
     res.status(200).json(result);
   } catch (error) {
@@ -17,8 +16,10 @@ const create = async (req: Request, res: Response) => {
 const index = async (req: Request, res: Response) => {
   try {
     const result = await bookStore.index();
-    if (result.length < 1){
-      res.status(200).json({Message: 'You have no book saved in the library'});
+    if (result.length < 1) {
+      res
+        .status(200)
+        .json({ Message: 'You have no book saved in the library' });
     }
     res.status(200).json(result);
   } catch (error) {
