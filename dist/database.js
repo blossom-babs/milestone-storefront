@@ -16,10 +16,12 @@ if (ENV === 'test') {
         password: POSTGRES_PASSWORD
     });
 }
-client = new pg_1.Pool({
-    host: POSTGRES_HOST,
-    database: POSTGRES_DB,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD
-});
+else {
+    client = new pg_1.Pool({
+        host: POSTGRES_HOST,
+        database: POSTGRES_DB,
+        user: POSTGRES_USER,
+        password: POSTGRES_PASSWORD
+    });
+}
 exports["default"] = client;

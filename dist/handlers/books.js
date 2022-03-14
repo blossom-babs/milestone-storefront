@@ -45,6 +45,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 book = req.body;
+                console.log(book);
                 return [4 /*yield*/, bookStore.create(book)];
             case 1:
                 result = _a.sent();
@@ -52,7 +53,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                res.send(404).json({ Message: "Unable to save book ".concat(req.body.title) });
+                res.status(404).json({ Message: "Error with saving book" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -67,6 +68,9 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, bookStore.index()];
             case 1:
                 result = _a.sent();
+                if (result.length < 1) {
+                    res.status(200).json({ Message: 'You have no book saved in the library' });
+                }
                 res.status(200).json(result);
                 return [3 /*break*/, 3];
             case 2:

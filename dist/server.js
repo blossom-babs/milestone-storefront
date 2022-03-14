@@ -7,6 +7,7 @@ var express_1 = __importDefault(require("express"));
 var books_1 = __importDefault(require("./handlers/books"));
 var app = (0, express_1["default"])();
 var address = '0.0.0.0:3000';
+app.use(express_1["default"].json());
 (0, books_1["default"])(app);
 app.get('*', function (req, res) {
     res

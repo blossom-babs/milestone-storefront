@@ -3,6 +3,7 @@ import BookRoutes from './handlers/books';
 
 const app: Application = express();
 const address: string = '0.0.0.0:3000';
+app.use(express.json())
 BookRoutes(app);
 
 app.get('*', (req: Request, res: Response) => {
