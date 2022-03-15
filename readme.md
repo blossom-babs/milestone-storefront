@@ -15,7 +15,7 @@ A-simple-book-API allows you to GET books from a library database, POST a new bo
 $ git clone https://github.com/blossom-babs/exercise-setup-postgresql-in-node-env/tree/books-crud-actions
 $ cd exercise-setup-postgresql-in-node-env
 $ npm install
-$ npm run build
+$ npm run watch
 ```
 If you want to contribute, before any of the steps above, you would need to __fork__ this project first.
 You're ready to hack (and | or contribute) ✌️
