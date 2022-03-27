@@ -1,6 +1,6 @@
-# A simple book API
+# Storefront API
 
-A-simple-book-API allows you to GET books from a library database, POST a new book to the database, PUT(edit) any book in the database, and lastly DELETE
+<!-- A-simple-book-API allows you to GET books from a library database, POST a new book to the database, PUT(edit) any book in the database, and lastly DELETE
 
 ## Bootstrapped with
 1. [PostgreSQL](https://www.postgresql.org/)
@@ -54,4 +54,4 @@ Contributions, issues and feature requests are welcome!
 
 ### Show your support
 - Give a ⭐ if you like this project
-- [Buy me a coffee](https://www.buymeacoffee.com/blossombabs)
+- [Buy me a coffee](https://www.buymeacoffee.com/blossombabs) -->
