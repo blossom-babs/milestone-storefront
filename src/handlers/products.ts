@@ -34,7 +34,9 @@ const show = async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await productStore.show(id);
     if (result === undefined) {
-      res.status(200).json({ Message: `Product with id ${id} cannot be found.` });
+      res
+        .status(200)
+        .json({ Message: `Product with id ${id} cannot be found.` });
       return;
     }
     res.status(200).json(result);

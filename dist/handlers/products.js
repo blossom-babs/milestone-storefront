@@ -95,7 +95,9 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
             case 1:
                 result = _a.sent();
                 if (result === undefined) {
-                    res.status(200).json({ Message: "Product with id ".concat(id, " cannot be found.") });
+                    res
+                        .status(200)
+                        .json({ Message: "Product with id ".concat(id, " cannot be found.") });
                     return [2 /*return*/];
                 }
                 res.status(200).json(result);
