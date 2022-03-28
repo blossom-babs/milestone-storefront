@@ -2,14 +2,14 @@
   "dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "book_stores",
+    "database": "storefront",
     "user": "blossom",
     "password": "password123"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "book_stores_test",
+    "database": "storefront_test",
     "user": "blossom",
     "password": "password123"
   }
