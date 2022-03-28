@@ -1,10 +1,17 @@
 import express, { Request, Response, Application } from 'express';
-import BookRoutes from './handlers/books';
+import ProductStores from './handlers/products';
 
 const app: Application = express();
-const address: string = '0.0.0.0:3000';
+const address: string = '0.0.0.0:8090';
+const port = 8090
 app.use(express.json());
-BookRoutes(app);
+ProductStores(app);
+
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    Message: `You have accessed Blossom store's front. The following routes are available to be accessed: /products, /users, /orders.`
+  })
+})
 
 app.get('*', (req: Request, res: Response) => {
   res
@@ -12,6 +19,6 @@ app.get('*', (req: Request, res: Response) => {
     .json({ Message: 'You tried to access a route that does not exist' });
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`starting app on: ${address}`);
 });
