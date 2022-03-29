@@ -52,7 +52,7 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'SELECT * FROM product';
+                        sql = 'SELECT * FROM products';
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
@@ -80,7 +80,7 @@ var ProductStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'INSERT INTO product (name, price, category) VALUES ($1, $2, $3) RETURNING *';
+                        sql = 'INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *';
                         productValues = Object.values(product);
                         return [4 /*yield*/, conn.query(sql, productValues)];
                     case 2:
@@ -106,7 +106,7 @@ var ProductStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = "SELECT * FROM product WHERE id=".concat(id);
+                        sql = "SELECT * FROM products WHERE id=".concat(id);
                         return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();
@@ -131,7 +131,7 @@ var ProductStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = "DELETE FROM product WHERE id=".concat(id, " RETURNING *");
+                        sql = "DELETE FROM products WHERE id=".concat(id, " RETURNING *");
                         return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();

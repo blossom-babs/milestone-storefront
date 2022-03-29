@@ -10,7 +10,7 @@ export class ProductStore {
   // get all products
   async index() {
     try {
-      const sql = 'SELECT * FROM product';
+      const sql = 'SELECT * FROM products';
       const conn = await client.connect();
       const result = await conn.query(sql);
       conn.release();
@@ -25,7 +25,7 @@ export class ProductStore {
     try {
       const conn = await client.connect();
       const sql =
-        'INSERT INTO product (name, price, category) VALUES ($1, $2, $3) RETURNING *';
+        'INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *';
       const productValues = Object.values(product);
       const result = await conn.query(sql, productValues);
       conn.release();
@@ -39,7 +39,7 @@ export class ProductStore {
   async show(id: string) {
     try {
       const conn = await client.connect();
-      const sql = `SELECT * FROM product WHERE id=${id}`;
+      const sql = `SELECT * FROM products WHERE id=${id}`;
       const result = await conn.query(sql);
       conn.release();
       return result.rows[0];
@@ -52,7 +52,7 @@ export class ProductStore {
   async delete(id: string) {
     try {
       const conn = await client.connect();
-      const sql = `DELETE FROM product WHERE id=${id} RETURNING *`;
+      const sql = `DELETE FROM products WHERE id=${id} RETURNING *`;
       const result = await conn.query(sql);
       conn.release();
       return result.rows[0];
