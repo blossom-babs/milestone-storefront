@@ -40,7 +40,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 exports.UserStore = void 0;
+var bcrypt_1 = __importDefault(require("bcrypt"));
 var database_1 = __importDefault(require("../database"));
+var pepper;
+var salt;
+var _a = process.env, SALT_ROUNDS = _a.SALT_ROUNDS, BCRYPT_PASSWORD = _a.BCRYPT_PASSWORD;
+if (BCRYPT_PASSWORD && SALT_ROUNDS) {
+    pepper = BCRYPT_PASSWORD;
+    salt = Number(SALT_ROUNDS);
+}
 var UserStore = /** @class */ (function () {
     function UserStore() {
     }
@@ -94,37 +102,79 @@ var UserStore = /** @class */ (function () {
     };
     UserStore.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, userValues, result, error_3;
+            var conn, _a, sql, userValues, result, error_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _b.sent();
+                        _a = user;
+                        return [4 /*yield*/, bcrypt_1["default"].hash(user.password + pepper, salt)];
+                    case 2:
+                        _a.password = _b.sent();
+                        sql = "INSERT INTO users (firstName, lastName, password) VALUES  ($1, $2, $3) RETURNING *";
+                        userValues = Object.values(user);
+                        return [4 /*yield*/, conn.query(sql, userValues)];
+                    case 3:
+                        result = _b.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 4:
+                        error_3 = _b.sent();
+                        throw new Error("Cannot create user. Returned with error ".concat(error_3));
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserStore.prototype.authenticate = function (name, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, response, user, match, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        sql = "INSERT INTO users (firstName, lastName, password) VALUES  ($1, $2, $3) RETURNING *";
+                        _a.trys.push([0, 5, , 6]);
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        userValues = Object.values(user);
-                        return [4 /*yield*/, conn.query(sql, userValues)];
+                        sql = "SELECT * FROM users WHERE firstName='".concat(name, "'");
+                        return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();
-                        conn.release();
-                        return [2 /*return*/, result.rows[0]];
+                        response = '';
+                        if (!result.rows.length) return [3 /*break*/, 4];
+                        user = result.rows[0];
+                        return [4 /*yield*/, bcrypt_1["default"].compare(password + pepper, user.password)];
                     case 3:
-                        error_3 = _a.sent();
-                        throw new Error("Cannot create user. Returned with error ".concat(error_3));
-                    case 4: return [2 /*return*/];
+                        match = _a.sent();
+                        if (match) {
+                            response = user;
+                        }
+                        else {
+                            response = 'Incorrect password';
+                        }
+                        _a.label = 4;
+                    case 4:
+                        conn.release();
+                        return [2 /*return*/, response || 'User does not exist'];
+                    case 5:
+                        error_4 = _a.sent();
+                        throw new Error("Cannot authenticate user. Returned with error ".concat(error_4));
+                    case 6: return [2 /*return*/];
                 }
             });
         });
     };
     UserStore.prototype.destroy = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, error_4;
+            var sql, conn, result, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = "DELETE FROM users WHERE id=".concat(id);
+                        sql = "DELETE FROM users WHERE id=".concat(id, " RETURNING *");
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
@@ -134,8 +184,8 @@ var UserStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 3:
-                        error_4 = _a.sent();
-                        throw new Error("Cannot delte user. Returned with error ".concat(error_4));
+                        error_5 = _a.sent();
+                        throw new Error("Cannot delte user. Returned with error ".concat(error_5));
                     case 4: return [2 /*return*/];
                 }
             });
