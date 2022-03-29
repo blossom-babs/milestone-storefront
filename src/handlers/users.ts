@@ -31,18 +31,23 @@ const create = async (req: Request, res: Response) => {
 
 const authenticate = async (req: Request, res: Response) => {
   try {
-    const user = await store.authenticate(req.body.firstName, req.body.password)
-    res.status(200).json(user)
+    const user = await store.authenticate(
+      req.body.firstName,
+      req.body.password
+    );
+    res.status(200).json(user);
   } catch (error) {
-    res.status(200).json({ Message: `Something went wrong with your query ${error}` })
+    res
+      .status(200)
+      .json({ Message: `Something went wrong with your query ${error}` });
   }
-}
+};
 
 const show = async (req: Request, res: Response) => {
   try {
     const user: User = await store.show(req.params.id);
     if (!user) {
-      res.status(200).json({ Message: 'User does not exist' })
+      res.status(200).json({ Message: 'User does not exist' });
       return;
     }
     res.status(200).json(user);
