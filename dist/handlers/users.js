@@ -35,9 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var users_1 = require("../models/users");
+var verifyAuthToken_1 = __importDefault(require("./auth/verifyAuthToken"));
 var store = new users_1.UserStore();
+var secret;
+if (process.env.TOKEN_SECRET) {
+    secret = process.env.TOKEN_SECRET;
+}
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, error_1;
     return __generator(this, function (_a) {
@@ -64,7 +73,7 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, error_2;
+    var user, jsonToken, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -72,7 +81,8 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, store.create(req.body)];
             case 1:
                 user = _a.sent();
-                res.status(200).json(user);
+                jsonToken = jsonwebtoken_1["default"].sign(req.body, secret);
+                res.status(200).json({ user: user, jsonToken: jsonToken });
                 return [3 /*break*/, 3];
             case 2:
                 error_2 = _a.sent();
@@ -152,10 +162,10 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 var UserRoutes = function (app) {
-    app.get('/users', index);
+    app.get('/users', verifyAuthToken_1["default"], index);
     app.post('/users', create);
-    app.post('/users/login', authenticate);
-    app.get('/users/:id', show);
-    app["delete"]('/users/:id', destroy);
+    app.post('/login', verifyAuthToken_1["default"], authenticate);
+    app.get('/users/:id', verifyAuthToken_1["default"], show);
+    app["delete"]('/users/:id', verifyAuthToken_1["default"], destroy);
 };
 exports["default"] = UserRoutes;

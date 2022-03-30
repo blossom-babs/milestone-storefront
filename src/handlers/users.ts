@@ -1,7 +1,16 @@
 import { Request, Response, Application } from 'express';
+import jwt from 'jsonwebtoken';
 import { UserStore, User } from '../models/users';
+import verifyAuthToken from './auth/verifyAuthToken';
 
 const store = new UserStore();
+
+let secret: string;
+
+
+if (process.env.TOKEN_SECRET) {
+  secret = process.env.TOKEN_SECRET
+}
 
 const index = async (req: Request, res: Response) => {
   try {
@@ -21,7 +30,8 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: User = await store.create(req.body);
-    res.status(200).json(user);
+    const jsonToken = jwt.sign(req.body, secret)
+    res.status(200).json({ user, jsonToken });
   } catch (error) {
     res
       .status(400)
@@ -70,11 +80,11 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const UserRoutes = (app: Application) => {
-  app.get('/users', index);
+  app.get('/users', verifyAuthToken, index);
   app.post('/users', create);
-  app.post('/users/login', authenticate);
-  app.get('/users/:id', show);
-  app.delete('/users/:id', destroy);
+  app.post('/login', verifyAuthToken, authenticate);
+  app.get('/users/:id', verifyAuthToken, show);
+  app.delete('/users/:id', verifyAuthToken, destroy);
 };
 
 export default UserRoutes;

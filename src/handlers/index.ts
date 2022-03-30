@@ -1,4 +1,11 @@
+import { Application } from 'express';
 import UserRoutes from './users';
 import ProductStores from './products';
 
-export { UserRoutes, ProductStores };
+
+const indexRoute = (app: Application) => {
+  UserRoutes(app)
+  ProductStores(app)
+}
+
+export default indexRoute

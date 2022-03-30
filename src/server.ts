@@ -1,13 +1,13 @@
 import express, { Request, Response, Application } from 'express';
-import { ProductStores, UserRoutes } from './handlers';
+import indexRoute from './handlers';
 
 const app: Application = express();
 const address: string = '0.0.0.0:8090';
 const port = 8090;
 app.use(express.json());
 
-ProductStores(app);
-UserRoutes(app);
+indexRoute(app);
+
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
