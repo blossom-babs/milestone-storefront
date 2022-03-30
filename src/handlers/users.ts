@@ -7,9 +7,8 @@ const store = new UserStore();
 
 let secret: string;
 
-
 if (process.env.TOKEN_SECRET) {
-  secret = process.env.TOKEN_SECRET
+  secret = process.env.TOKEN_SECRET;
 }
 
 const index = async (req: Request, res: Response) => {
@@ -30,7 +29,7 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: User = await store.create(req.body);
-    const jsonToken = jwt.sign(req.body, secret)
+    const jsonToken = jwt.sign(req.body, secret);
     res.status(200).json({ user, jsonToken });
   } catch (error) {
     res

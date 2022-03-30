@@ -19,7 +19,9 @@ var verifyAuthToken = function (req, res, next) {
         next();
     }
     catch (error) {
-        res.status(201).json({ Message: 'You are not authorized for this service' });
+        res
+            .status(201)
+            .json({ Message: 'You are not authorized for this service' });
     }
 };
 exports["default"] = verifyAuthToken;
