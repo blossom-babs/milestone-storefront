@@ -1,5 +1,6 @@
 import { Request, Response, Application } from 'express';
 import { ProductStore, Product } from '../models/products';
+import verifyAuthToken from './auth/verifyAuthToken';
 
 const productStore = new ProductStore();
 
@@ -19,7 +20,7 @@ const index = async (req: Request, res: Response) => {
     if (result.length < 1) {
       res
         .status(200)
-        .json({ Message: 'You have no book saved in the library' });
+        .json({ Message: 'You have product saved in the library' });
     }
     res.status(200).json(result);
   } catch (error) {
@@ -30,9 +31,13 @@ const index = async (req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
+  console.log(req.query)
   try {
-    const { id } = req.params;
-    const result = await productStore.show(id);
+    const category = req.query.cat as string
+    console.log(category)
+    console.log('shey nothing con they log ni')
+    const id = req.query.id as string
+    const result = await productStore.show(id, category);
     if (result === undefined) {
       res
         .status(200)
@@ -58,9 +63,9 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const ProductStores = (app: Application) => {
-  app.post('/products', create);
+  app.post('/products', verifyAuthToken, create);
   app.get('/products', index);
-  app.get('/products/:id', show);
+  app.get('/products/?cat=', show);
   app.delete('/products/:id', destroy);
 };
 

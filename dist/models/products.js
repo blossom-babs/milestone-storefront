@@ -44,7 +44,6 @@ var database_1 = __importDefault(require("../database"));
 var ProductStore = /** @class */ (function () {
     function ProductStore() {
     }
-    // get all products
     ProductStore.prototype.index = function () {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, error_1;
@@ -52,7 +51,7 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'SELECT * FROM products';
+                        sql = "SELECT * FROM products";
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
@@ -69,7 +68,6 @@ var ProductStore = /** @class */ (function () {
             });
         });
     };
-    // add product to db
     ProductStore.prototype.create = function (product) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, productValues, result, error_2;
@@ -95,8 +93,7 @@ var ProductStore = /** @class */ (function () {
             });
         });
     };
-    // get one book
-    ProductStore.prototype.show = function (id) {
+    ProductStore.prototype.show = function (id, category) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_3;
             return __generator(this, function (_a) {
@@ -106,10 +103,12 @@ var ProductStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = "SELECT * FROM products WHERE id=".concat(id);
+                        sql = "SELECT * FROM products WHERE id=".concat(id, " OR category='").concat(category, "'");
+                        console.log('here is the query command:', sql);
                         return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();
+                        console.log('here is the result:', result);
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 3:
@@ -120,7 +119,6 @@ var ProductStore = /** @class */ (function () {
             });
         });
     };
-    // delete a book
     ProductStore.prototype["delete"] = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_4;

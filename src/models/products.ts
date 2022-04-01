@@ -7,10 +7,9 @@ export type Product = {
 };
 
 export class ProductStore {
-  // get all products
   async index() {
     try {
-      const sql = 'SELECT * FROM products';
+      const sql = `SELECT * FROM products`;
       const conn = await client.connect();
       const result = await conn.query(sql);
       conn.release();
@@ -20,7 +19,6 @@ export class ProductStore {
     }
   }
 
-  // add product to db
   async create(product: Product) {
     try {
       const conn = await client.connect();
@@ -35,12 +33,13 @@ export class ProductStore {
     }
   }
 
-  // get one book
-  async show(id: string) {
+  async show(id: string, category:string) {
     try {
       const conn = await client.connect();
-      const sql = `SELECT * FROM products WHERE id=${id}`;
+      const sql = `SELECT * FROM products WHERE id=${id} OR category='${category}'`;
+      console.log('here is the query command:', sql)
       const result = await conn.query(sql);
+      console.log('here is the result:', result)
       conn.release();
       return result.rows[0];
     } catch (error) {
@@ -48,7 +47,6 @@ export class ProductStore {
     }
   }
 
-  // delete a book
   async delete(id: string) {
     try {
       const conn = await client.connect();

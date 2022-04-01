@@ -35,8 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 var products_1 = require("../models/products");
+var verifyAuthToken_1 = __importDefault(require("./auth/verifyAuthToken"));
 var productStore = new products_1.ProductStore();
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var product, result, error_1;
@@ -70,7 +74,7 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 if (result.length < 1) {
                     res
                         .status(200)
-                        .json({ Message: 'You have no book saved in the library' });
+                        .json({ Message: 'You have product saved in the library' });
                 }
                 res.status(200).json(result);
                 return [3 /*break*/, 3];
@@ -85,14 +89,20 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, result, error_3;
+    var category, id, result, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                id = req.params.id;
-                return [4 /*yield*/, productStore.show(id)];
+                console.log(req.query);
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                category = req.query.cat;
+                console.log(category);
+                console.log('shey nothing con they log ni');
+                id = req.query.id;
+                return [4 /*yield*/, productStore.show(id, category)];
+            case 2:
                 result = _a.sent();
                 if (result === undefined) {
                     res
@@ -101,14 +111,14 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
                     return [2 /*return*/];
                 }
                 res.status(200).json(result);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 error_3 = _a.sent();
                 res
                     .status(200)
                     .json({ message: "Could not fetch product with id ".concat(req.params.id) });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
@@ -132,9 +142,9 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 var ProductStores = function (app) {
-    app.post('/products', create);
+    app.post('/products', verifyAuthToken_1["default"], create);
     app.get('/products', index);
-    app.get('/products/:id', show);
+    app.get('/products/?cat=', show);
     app["delete"]('/products/:id', destroy);
 };
 exports["default"] = ProductStores;
