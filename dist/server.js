@@ -2,24 +2,24 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
-var handlers_1 = __importDefault(require("./handlers"));
-var app = (0, express_1["default"])();
-var address = '0.0.0.0:8090';
-var port = 8090;
-app.use(express_1["default"].json());
-(0, handlers_1["default"])(app);
-app.get('/', function (req, res) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const handlers_1 = __importDefault(require("./handlers"));
+const app = (0, express_1.default)();
+const address = '0.0.0.0:8090';
+const port = 8090;
+app.use(express_1.default.json());
+(0, handlers_1.default)(app);
+app.get('/', (req, res) => {
     res.status(200).json({
-        Message: "You have accessed Blossom store's front. The following routes are available to be accessed: /products, /users, /orders."
+        Message: `You have accessed Blossom store's front. The following routes are available to be accessed: /products, /users, /orders.`,
     });
 });
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
     res
         .status(200)
         .json({ Message: 'You tried to access a route that does not exist' });
 });
-app.listen(port, function () {
-    console.log("starting app on: ".concat(address));
+app.listen(port, () => {
+    console.log(`starting app on: ${address}`);
 });
