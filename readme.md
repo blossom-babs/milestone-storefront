@@ -41,7 +41,7 @@ If you wish to contribute to this project, before any of the steps above, you wo
 You're ready to hack (and | or contribute) ✌️
 
 ## Usage
-The endpoints available for tests can be found in the **requirements.md** file
+The endpoints available for tests can be found in the ***requirements.md*** file
 
 ## 🤝 Contributing
 Contributions, issues and feature requests are welcome!
@@ -54,4 +54,4 @@ Contributions, issues and feature requests are welcome!
 
 ### Show your support
 - Give a ⭐ if you like this project
-- [Buy me a coffee](https://www.buymeacoffee.com/blossombabs) -->
+- [Buy me a coffee](https://www.buymeacoffee.com/blossombabs) 
