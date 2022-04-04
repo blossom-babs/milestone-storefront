@@ -62,7 +62,6 @@ const category = async (req: Request, res: Response) => {
   try {
     const cat = req.query.cat as string
     const result = await productStore.category(cat)
-    console.log(result)
     res.status(200).json(result)
   } catch (error) {
     throw new Error(`Could not retrieve product: ${error}`);

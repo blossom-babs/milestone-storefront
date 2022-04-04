@@ -145,7 +145,6 @@ var category = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, productStore.category(cat)];
             case 1:
                 result = _a.sent();
-                console.log(result);
                 res.status(200).json(result);
                 return [3 /*break*/, 3];
             case 2:
