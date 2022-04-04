@@ -94,7 +94,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -164,7 +164,7 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
 var UserRoutes = function (app) {
     app.get('/users', verifyAuthToken_1["default"], index);
     app.post('/users', create);
-    app.post('/login', verifyAuthToken_1["default"], authenticate);
+    app.post('/login', verifyAuthToken_1["default"], login);
     app.get('/users/:id', verifyAuthToken_1["default"], show);
     app["delete"]('/users/:id', verifyAuthToken_1["default"], destroy);
 };

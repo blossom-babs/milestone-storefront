@@ -38,7 +38,7 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-const authenticate = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   try {
     const user = await store.authenticate(
       req.body.firstName,
@@ -81,7 +81,7 @@ const destroy = async (req: Request, res: Response) => {
 const UserRoutes = (app: Application) => {
   app.get('/users', verifyAuthToken, index);
   app.post('/users', create);
-  app.post('/login', verifyAuthToken, authenticate);
+  app.post('/login', verifyAuthToken, login);
   app.get('/users/:id', verifyAuthToken, show);
   app.delete('/users/:id', verifyAuthToken, destroy);
 };
