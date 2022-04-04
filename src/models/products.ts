@@ -33,13 +33,11 @@ export class ProductStore {
     }
   }
 
-  async show(id: string, category:string) {
+  async show(id: string) {
     try {
       const conn = await client.connect();
-      const sql = `SELECT * FROM products WHERE id=${id} OR category='${category}'`;
-      console.log('here is the query command:', sql)
+      const sql = `SELECT * FROM products WHERE id=${id}`;
       const result = await conn.query(sql);
-      console.log('here is the result:', result)
       conn.release();
       return result.rows[0];
     } catch (error) {
@@ -56,6 +54,19 @@ export class ProductStore {
       return result.rows[0];
     } catch (error) {
       throw new Error(`Cannot delete product with id ${id}: ${error}`);
+    }
+  }
+
+  async category(cat:string){
+    try {
+      const conn = await client.connect();
+      const sql = `SELECT * FROM products WHERE category='${cat}'`;
+      const result = await conn.query(sql)
+      conn.release()
+      return result.rows
+    } catch (error) {
+      throw new Error(`${cat} does not exist: ${error}`);
+
     }
   }
 }

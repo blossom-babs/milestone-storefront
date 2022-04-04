@@ -31,13 +31,9 @@ const index = async (req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-  console.log(req.query)
   try {
-    const category = req.query.cat as string
-    console.log(category)
-    console.log('shey nothing con they log ni')
-    const id = req.query.id as string
-    const result = await productStore.show(id, category);
+    const id = req.params.id as string
+    const result = await productStore.show(id);
     if (result === undefined) {
       res
         .status(200)
@@ -62,10 +58,22 @@ const destroy = async (req: Request, res: Response) => {
   }
 };
 
+const category = async (req: Request, res: Response) => {
+  try {
+    const cat = req.query.cat as string
+    const result = await productStore.category(cat)
+    console.log(result)
+    res.status(200).json(result)
+  } catch (error) {
+    throw new Error(`Could not retrieve product: ${error}`);
+  }
+}
+
 const ProductStores = (app: Application) => {
   app.post('/products', verifyAuthToken, create);
   app.get('/products', index);
-  app.get('/products/?cat=', show);
+  app.get('/products/:id', show);
+  app.get('/product', category);
   app.delete('/products/:id', destroy);
 };
 
