@@ -35,39 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-exports.OrderStore = void 0;
-var database_1 = __importDefault(require("../database"));
-var OrderStore = /** @class */ (function () {
-    function OrderStore() {
-    }
-    OrderStore.prototype.create = function (quantity, status, userId, productId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, result, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, database_1["default"].connect()];
-                    case 1:
-                        conn = _a.sent();
-                        sql = "INSERT INTO orders (userId, productId, status, quantity) VALUES ($1, $2, $3, $4) RETURNING *";
-                        return [4 /*yield*/, conn.query(sql, [userId, productId, status, quantity])];
-                    case 2:
-                        result = _a.sent();
-                        conn.release();
-                        return [2 /*return*/, result.rows[0]];
-                    case 3:
-                        error_1 = _a.sent();
-                        throw new Error("".concat(error_1));
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return OrderStore;
-}());
-exports.OrderStore = OrderStore;
+var orders_1 = require("../models/orders");
+var store = new orders_1.OrderStore();
+var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId, productId, _a, quantity, status_1, result, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                userId = Number(req.query.userId);
+                productId = Number(req.query.productId);
+                _a = req.body, quantity = _a.quantity, status_1 = _a.status;
+                return [4 /*yield*/, store.create(quantity, status_1, userId, productId)];
+            case 1:
+                result = _b.sent();
+                res.status(200).json(result);
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _b.sent();
+                console.error(error_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+var OrdersRoutes = function (app) {
+    app.post('/orders/:userId/:productId', create);
+};
+exports["default"] = OrdersRoutes;
