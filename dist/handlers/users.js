@@ -43,10 +43,7 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var users_1 = require("../models/users");
 var verifyAuthToken_1 = __importDefault(require("./auth/verifyAuthToken"));
 var store = new users_1.UserStore();
-var secret;
-if (process.env.TOKEN_SECRET) {
-    secret = process.env.TOKEN_SECRET;
-}
+var secret = process.env.TOKEN_SECRET;
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, error_1;
     return __generator(this, function (_a) {

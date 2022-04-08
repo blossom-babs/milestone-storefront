@@ -5,11 +5,7 @@ import verifyAuthToken from './auth/verifyAuthToken';
 
 const store = new UserStore();
 
-let secret: string;
-
-if (process.env.TOKEN_SECRET) {
-  secret = process.env.TOKEN_SECRET;
-}
+let secret = process.env.TOKEN_SECRET as string;
 
 const index = async (req: Request, res: Response) => {
   try {
