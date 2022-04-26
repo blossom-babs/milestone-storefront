@@ -13,9 +13,7 @@ const {
 } = process.env;
 
 let client: Pool;
-console.log('current environment', NODE_ENV)
 if (NODE_ENV === 'test') {
-  console.log('i am in test env', NODE_ENV)
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_TEST_DB,
@@ -23,7 +21,6 @@ if (NODE_ENV === 'test') {
     password: POSTGRES_PASSWORD,
   });
 } else if (NODE_ENV === 'dev') {
-  console.log('i am in dev env', NODE_ENV)
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_DB,
@@ -31,7 +28,6 @@ if (NODE_ENV === 'test') {
     password: POSTGRES_PASSWORD,
   });
 } else {
-  console.log('omo, no variable', NODE_ENV)
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_TEST_DB,

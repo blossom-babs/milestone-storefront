@@ -35,32 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 var orders_1 = require("../models/orders");
+var verifyAuthToken_1 = __importDefault(require("./auth/verifyAuthToken"));
 var store = new orders_1.OrderStore();
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, productId, _a, quantity, status_1, result, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var order, result, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                userId = Number(req.query.userId);
-                productId = Number(req.query.productId);
-                _a = req.body, quantity = _a.quantity, status_1 = _a.status;
-                return [4 /*yield*/, store.create(quantity, status_1, userId, productId)];
+                _a.trys.push([0, 2, , 3]);
+                order = req.body;
+                return [4 /*yield*/, store.create(order)];
             case 1:
-                result = _b.sent();
+                result = _a.sent();
                 res.status(200).json(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_1 = _b.sent();
-                console.error(error_1);
+                error_1 = _a.sent();
+                res.status(400).json(error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var OrdersRoutes = function (app) {
-    app.post('/orders/:userId/:productId', create);
+    app.post('/orders', verifyAuthToken_1["default"], create);
 };
 exports["default"] = OrdersRoutes;

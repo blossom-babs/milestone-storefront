@@ -1,23 +1,21 @@
 import { Request, Response, Application } from "express";
 import { Order, OrderStore } from "../models/orders";
+import verifyAuthToken from "./auth/verifyAuthToken";
 
 const store = new OrderStore()
 
 const create = async (req: Request, res: Response) => {
   try {
-
-    const userId = Number(req.query.userId)
-    const productId = Number(req.query.productId)
-    const { quantity, status } = req.body
-    const result = await store.create(quantity, status, userId, productId)
+    const order:Order = req.body
+    const result = await store.create(order)
     res.status(200).json(result)
   } catch (error) {
-    console.error(error)
+    res.status(400).json(error)
   }
 }
 
 const OrdersRoutes = (app: Application) => {
-  app.post('/orders/:userId/:productId', create)
+  app.post('/orders', verifyAuthToken, create)
 }
 
 export default OrdersRoutes
