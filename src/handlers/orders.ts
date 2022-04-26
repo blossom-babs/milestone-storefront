@@ -10,7 +10,8 @@ const create = async (req: Request, res: Response) => {
     const result = await store.create(order)
     res.status(200).json(result)
   } catch (error) {
-    res.status(400).json(error)
+    console.log(error)
+    res.status(400).json(`${error}`)
   }
 }
 
