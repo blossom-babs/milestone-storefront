@@ -49,3 +49,21 @@ Displays the details of a single product in the store
 
 ### GET /product/?cat
 Displays the products by their category
+
+## Orders
+
+### POST /orders
+Place an order on existing products in the store.
+
+Conditions: 
+1. User account must exist
+2. User must be logged in
+3. Products must exist in the database
+
+The following data is required to create an order;
+```
+"userId": "",
+"productId": "",
+"status": "", // can either be open or closed
+"quantity" : // expects a number
+```
