@@ -26,7 +26,7 @@ export class OrderStore {
       const findUser = `SELECT * FROM users WHERE id='${order.userId}'`
       const findUserResult = await conn.query(findUser)
       if (findUserResult.rows[0] < 1) return 'User does not exist';
-      const sql = `INSERT INTO orders (userId, productId, order_status, quantity) VALUES ($1, $2, $3, $4) RETURNING *`;
+      const sql = `INSERT INTO orders (userId, order_status) VALUES ($1, $2) RETURNING *`;
       const orderValues = Object.values(order)
       const result = await conn.query(sql, orderValues);
       conn.release()

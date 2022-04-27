@@ -7,8 +7,8 @@ export type Product = {
 };
 
 const toLower = (arr: (string | number)[]) => {
-  let newArr = []
-  for (let word of arr) {
+  const newArr = []
+  for (const word of arr) {
     if (typeof word === 'string') newArr.push(word.toLowerCase())
     else { newArr.push(word) }
   }
@@ -68,7 +68,7 @@ export class ProductStore {
 
   async category(cat: string) {
     try {
-      let catLower = cat.toLowerCase()
+      const catLower = cat.toLowerCase()
       const conn = await client.connect();
       const sql = `SELECT * FROM products WHERE category='${catLower}'`;
       const result = await conn.query(sql)
