@@ -32,7 +32,7 @@ const index = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id as string
+    const id = req.params.id as string;
     const result = await productStore.show(id);
     if (result === undefined) {
       res
@@ -60,13 +60,13 @@ const destroy = async (req: Request, res: Response) => {
 
 const category = async (req: Request, res: Response) => {
   try {
-    const cat = req.query.cat as string
-    const result = await productStore.category(cat)
-    res.status(200).json(result)
+    const cat = req.query.cat as string;
+    const result = await productStore.category(cat);
+    res.status(200).json(result);
   } catch (error) {
     throw new Error(`Could not retrieve product: ${error}`);
   }
-}
+};
 
 const ProductStores = (app: Application) => {
   app.post('/products', verifyAuthToken, create);

@@ -6,7 +6,7 @@ import OrdersRoutes from './orders';
 const indexRoute = (app: Application) => {
   UserRoutes(app);
   ProductStores(app);
-  OrdersRoutes(app)
+  OrdersRoutes(app);
 };
 
 export default indexRoute;
