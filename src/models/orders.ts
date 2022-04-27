@@ -20,12 +20,14 @@ export class OrderStore {
     }
   }
 
-  async create(order:Order): Promise<Order[]> {
+  async create(order: Order): Promise<Order[] | string> {
     try {
       const conn = await client.connect();
-      const sql = `INSERT INTO orders (userId, productId, status, quantity) VALUES ($1, $2, $3, $4) RETURNING *`;
+      const findUser = `SELECT * FROM users WHERE id='${order.userId}'`
+      const findUserResult = await conn.query(findUser)
+      if (findUserResult.rows[0] < 1) return 'User does not exist';
+      const sql = `INSERT INTO orders (userId, productId, order_status, quantity) VALUES ($1, $2, $3, $4) RETURNING *`;
       const orderValues = Object.values(order)
-      console.log(order)
       const result = await conn.query(sql, orderValues);
       conn.release()
       return result.rows[0]

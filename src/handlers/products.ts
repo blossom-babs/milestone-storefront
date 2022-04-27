@@ -20,7 +20,7 @@ const index = async (req: Request, res: Response) => {
     if (result.length < 1) {
       res
         .status(200)
-        .json({ Message: 'You have product saved in the library' });
+        .json({ Message: 'You have no product saved in the library' });
     }
     res.status(200).json(result);
   } catch (error) {

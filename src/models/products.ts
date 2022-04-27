@@ -6,6 +6,15 @@ export type Product = {
   category: string;
 };
 
+const toLower = (arr: (string | number)[]) => {
+  let newArr = []
+  for (let word of arr) {
+    if (typeof word === 'string') newArr.push(word.toLowerCase())
+    else { newArr.push(word) }
+  }
+  return newArr
+}
+
 export class ProductStore {
   async index() {
     try {
@@ -24,7 +33,7 @@ export class ProductStore {
       const conn = await client.connect();
       const sql =
         'INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *';
-      const productValues = Object.values(product);
+      const productValues = toLower(Object.values(product));
       const result = await conn.query(sql, productValues);
       conn.release();
       return result.rows[0];
@@ -57,11 +66,13 @@ export class ProductStore {
     }
   }
 
-  async category(cat:string){
+  async category(cat: string) {
     try {
+      let catLower = cat.toLowerCase()
       const conn = await client.connect();
-      const sql = `SELECT * FROM products WHERE category='${cat}'`;
+      const sql = `SELECT * FROM products WHERE category='${catLower}'`;
       const result = await conn.query(sql)
+      if (result.rowCount < 1) return 'Category does not exist'
       conn.release()
       return result.rows
     } catch (error) {
