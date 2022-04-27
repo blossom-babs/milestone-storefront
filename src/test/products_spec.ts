@@ -1,5 +1,5 @@
-import { Product, ProductStore } from '../models/products';
-import client from "../database";
+import {ProductStore } from '../models/products';
+// import client from "../database";
 
 const store = new ProductStore()
 describe('products model', () => {

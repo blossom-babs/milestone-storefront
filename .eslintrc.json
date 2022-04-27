@@ -11,6 +11,7 @@
   },
   "plugins": ["@typescript-eslint", "import"],
   "rules": {
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
     "class-methods-use-this": "off",
     "import/no-mutable-exports": "off",
     "no-param-reassign": "warn",

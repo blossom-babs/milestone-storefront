@@ -3,3 +3,5 @@ node_modules/
 migrations
 **/*.json
 docker-compose.yml
+test
+__test__
