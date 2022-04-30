@@ -1,5 +1,7 @@
 import { ProductStore } from '../models/products';
-// import client from "../database";
+import client from "../database";
+
+//console.log('marketr', process.env)
 
 const store = new ProductStore();
 describe('products model', () => {
