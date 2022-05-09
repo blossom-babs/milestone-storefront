@@ -7,7 +7,7 @@
     "start": "node src/server.ts",
     "prettier": "npx prettier --write **/*.ts",
     "lint": "eslint **/*.ts --fix",
-    "test-db": "set NODE_ENV=test && node index.js && db-migrate db:drop test",
+    "drop-db": "db:drop test",
     "format": "npm run lint && npm run prettier",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "npx tsc && set NODE_ENV=test && db-migrate --env test up && jasmine",
