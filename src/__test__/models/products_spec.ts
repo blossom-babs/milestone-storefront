@@ -1,5 +1,7 @@
-import { ProductStore } from '../../src/models/products';
+import { ProductStore } from '../../models/products';
 const store = new ProductStore();
+
+//console.log('this is where am at', process.env.ENV)
 
 describe('products model', () => {
   it('should have an index method', () => {

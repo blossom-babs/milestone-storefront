@@ -1,4 +1,4 @@
-import { OrderStore } from './../../src/models/orders';
+import { OrderStore } from '../../models/orders';
 const store = new OrderStore();
 
 describe('order model', () => {
